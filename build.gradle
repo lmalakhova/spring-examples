@@ -29,6 +29,7 @@ dependencies {
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
-task wrapper(type: Wrapper) {
-    gradleVersion '5.0'
+wrapper{
+    gradleVersion = '5.1'
+    distributionType = Wrapper.DistributionType.BIN
 }
