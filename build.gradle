@@ -24,9 +24,11 @@ repositories {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile('org.projectlombok:lombok:1.18.4')
+    compile('org.projectlombok:lombok:1.18.10')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
+    runtime('com.h2database:h2:1.4.199')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 wrapper{
