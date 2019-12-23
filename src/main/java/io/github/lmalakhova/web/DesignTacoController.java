@@ -1,6 +1,11 @@
-package io.github.lmalakhova;
+package io.github.lmalakhova.web;
 
-import io.github.lmalakhova.Ingredient.Type;
+import io.github.lmalakhova.data.IngredientRepository;
+import io.github.lmalakhova.data.TacoRepository;
+import io.github.lmalakhova.tacos.Ingredient;
+import io.github.lmalakhova.tacos.Ingredient.Type;
+import io.github.lmalakhova.tacos.Order;
+import io.github.lmalakhova.tacos.Taco;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,19 +19,31 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 
-@Slf4j
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
 public class DesignTacoController {
     private final IngredientRepository ingredientRepo;
+    private TacoRepository designRepo;
 
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepo) {
+    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository designRepo) {
         this.ingredientRepo = ingredientRepo;
+        this.designRepo = designRepo;
+    }
+
+    @ModelAttribute(name = "order")
+    public Order order() {
+        return new Order();
+    }
+
+    @ModelAttribute(name = "taco")
+    public Taco taco() {
+        return new Taco();
     }
 
     @GetMapping
+    @ModelAttribute
     public String showDesignForm(Model model) {
 
         List<Ingredient> ingredients = new ArrayList<>();
@@ -42,11 +59,14 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign(@Valid Taco design, Errors errors) {
+    public String processDesign(@Valid @ModelAttribute("design") Taco design, Errors errors, @ModelAttribute Order order) {
         if (errors.hasErrors()) {
             return "design";
         }
-        log.info("Processing design: " + design);
+        Taco saved = designRepo.save(design);
+        order.addDesign(saved);
+
+
         return "redirect:/orders/current";
     }
 
