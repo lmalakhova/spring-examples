@@ -1,4 +1,4 @@
-package io.github.lmalakhova;
+package io.github.lmalakhova.tacos;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

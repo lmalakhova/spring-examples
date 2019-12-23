@@ -1,4 +1,6 @@
-package io.github.lmalakhova;
+package io.github.lmalakhova.data;
+
+import io.github.lmalakhova.tacos.Ingredient;
 
 public interface IngredientRepository {
 
