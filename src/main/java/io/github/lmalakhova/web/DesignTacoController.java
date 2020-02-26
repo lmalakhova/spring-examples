@@ -3,7 +3,6 @@ package io.github.lmalakhova.web;
 import io.github.lmalakhova.data.IngredientRepository;
 import io.github.lmalakhova.data.TacoRepository;
 import io.github.lmalakhova.tacos.Ingredient;
-import io.github.lmalakhova.tacos.Ingredient.Type;
 import io.github.lmalakhova.tacos.Order;
 import io.github.lmalakhova.tacos.Taco;
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +47,8 @@ public class DesignTacoController {
 
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepo.findAll().forEach(ingredients::add);
-        Type[] types = Ingredient.Type.values();
-        for (Type type : types) {
+        Ingredient.Type[] types = Ingredient.Type.values();
+        for (Ingredient.Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }
@@ -70,7 +69,7 @@ public class DesignTacoController {
         return "redirect:/orders/current";
     }
 
-    private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
+    private List<Ingredient> filterByType(List<Ingredient> ingredients, Ingredient.Type type) {
         return ingredients
                 .stream()
                 .filter(t -> t.getType().equals(type))
